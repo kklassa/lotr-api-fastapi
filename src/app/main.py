@@ -59,6 +59,18 @@ async def delete_character(db: DBSession, id: int):
     return crud.delete_one(db, character)
 
 
+@app.get("/characters/{id}/weapons", response_model=List[models.Weapon])
+async def get_weapons_for_character(db: DBSession, id: int):
+    character = crud.get_one(db, models.Character, id)
+    return character.weapons
+
+
+@app.post("/characters/{id}/weapons", response_model=models.CharacterWeaponLink)
+async def add_weapon_to_character(db: DBSession, id: int, weapon_id: int):
+    link = models.CharacterWeaponLink(character_id=id, weapon_id=weapon_id)
+    return crud.create_one(db, link)
+
+
 @app.get("/races/{id}", response_model=Optional[models.Race])
 @app.get("/races", response_model=List[models.Race])
 async def get_races(db: DBSession, id: int = None):

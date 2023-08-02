@@ -12,13 +12,23 @@ class Race(SQLModel, table=True):
     characters: List["Character"] = Relationship(back_populates="race")
 
 
+class CharacterWeaponLink(SQLModel, table=True):
+    character_id: Optional[int] = Field(
+        default=None, foreign_key="character.id", primary_key=True
+    )
+    weapon_id: Optional[int] = Field(
+        default=None, foreign_key="weapon.id", primary_key=True
+    )
+
+
 class Character(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: Optional[int] = Field(default=None, primary_key=True, )
     first_name: str
     last_name: Optional[str] = None
 
     race_id: Optional[int] = Field(default=None, foreign_key="race.id")
     race: Optional[Race] = Relationship(back_populates="characters")
+    weapons: List["Weapon"] = Relationship(back_populates="characters", link_model=CharacterWeaponLink)
 
 
 class WeaponType(str, Enum):
@@ -30,3 +40,5 @@ class Weapon(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     type: WeaponType
+
+    characters: List[Character] = Relationship(back_populates="weapons", link_model=CharacterWeaponLink)
