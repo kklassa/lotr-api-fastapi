@@ -1,4 +1,4 @@
-LotR API - FastAPI + SQLModel
+# LotR API - FastAPI + SQLModel
 
 ```
                        \ : /
