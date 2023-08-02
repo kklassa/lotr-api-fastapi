@@ -1,27 +1,15 @@
 from alembic import command
 from alembic.config import Config
-from fastapi import Depends, FastAPI
+from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
-from sqlmodel import Session
-from typing import Annotated, List, Optional
+from typing import List, Optional
 
-from app.database import engine
+from app.database import DBSession
 import app.crud as crud
 import app.models as models
 
 
 app = FastAPI()
-
-
-def get_db():
-    db = Session(engine)
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-DBSession = Annotated[Session, Depends(get_db)]
 
 
 @app.on_event("startup")
