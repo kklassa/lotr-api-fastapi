@@ -1,13 +1,13 @@
+from alembic import command
+from alembic.config import Config
 from fastapi import Depends, FastAPI
 from fastapi.responses import RedirectResponse
-from sqlmodel import SQLModel, Session
+from sqlmodel import Session
 
 from app.database import engine
 import app.crud as crud
 import app.models as models
 
-
-SQLModel.metadata.create_all(engine)
 
 app = FastAPI()
 
@@ -18,6 +18,12 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+@app.on_event("startup")
+def on_startup():
+    alembic_cfg = Config("alembic.ini")
+    command.upgrade(alembic_cfg, "head")
 
 
 @app.get("/")
