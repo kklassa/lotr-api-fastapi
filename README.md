@@ -50,3 +50,13 @@ With Docker installed, simpy run:
 ```bash
 docker compose up
 ```
+
+## Database Migrations
+
+This project uses [Alembic](https://alembic.sqlalchemy.org/en/latest/) for database migrations.
+
+To create a new migration go into the `src` directory and run:
+
+```bash
+alembic revision --autogenerate -m "migration message"
+```
