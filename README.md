@@ -60,3 +60,9 @@ To create a new migration go into the `src` directory and run:
 ```bash
 alembic revision --autogenerate -m "migration message"
 ```
+
+To apply the migrations run:
+
+```bash
+alembic upgrade head
+```
