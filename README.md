@@ -35,3 +35,18 @@ j J         /-;-A'-'|'--'-j\
                   Cccc'
 ```
 *[artwork source](https://www.asciiart.eu/books/lord-of-the-rings)*
+
+## Description
+
+This is a demo project showcasing the use of [FastAPI](https://fastapi.tiangolo.com/) and [SQLModel](https://sqlmodel.tiangolo.com/) to build a REST API.
+
+
+## Getting Started
+
+To get a local copy up and running you should have Docker installed on your machine.
+
+With Docker installed, simpy run:
+
+```bash
+docker compose up
+```
