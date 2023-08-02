@@ -36,13 +36,48 @@ async def root():
 
 
 @app.get("/characters/{id}", response_model=Optional[models.Character])
-@app.get("/characters/", response_model=List[models.Character])
+@app.get("/characters", response_model=List[models.Character])
 async def get_characters(db: DBSession, id: int = None):
     if id:
         return crud.get_one(db, models.Character, id)
     return crud.get_all(db, models.Character)
 
 
-@app.post("/characters/", response_model=models.Character)
+@app.post("/characters", response_model=models.Character)
 async def create_character(db: DBSession, character: models.Character):
     return crud.create_one(db, character)
+
+
+@app.put("/characters", response_model=models.Character)
+async def update_character(db: DBSession, character: models.Character):
+    return crud.update_one(db, character)
+
+
+@app.delete("/characters/{id}", response_model=models.Character)
+async def delete_character(db: DBSession, id: int):
+    character = crud.get_one(db, models.Character, id)
+    return crud.delete_one(db, character)
+
+
+@app.get("/races/{id}", response_model=Optional[models.Race])
+@app.get("/races", response_model=List[models.Race])
+async def get_races(db: DBSession, id: int = None):
+    if id:
+        return crud.get_one(db, models.Race, id)
+    return crud.get_all(db, models.Race)
+
+
+@app.post("/races")
+async def create_race(db: DBSession, race: models.Race):
+    return crud.create_one(db, race)
+
+
+@app.put("/races")
+async def update_race(db: DBSession, race: models.Race):
+    return crud.update_one(db, race)
+
+
+@app.delete("/races/{id}")
+async def delete_race(db: DBSession, id: int):
+    race = crud.get_one(db, models.Race, id)
+    return crud.delete_one(db, race)

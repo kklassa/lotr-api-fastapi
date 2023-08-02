@@ -21,7 +21,9 @@ def create_one(session: Session, model: SQLModel):
 
 
 def update_one(session: Session, model: SQLModel):
-    return NotImplementedError
+    session.merge(model)
+    session.commit()
+    return model
 
 
 def delete_one(session: Session, model: SQLModel):
