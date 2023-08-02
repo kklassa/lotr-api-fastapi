@@ -48,12 +48,12 @@ async def create_character(db: DBSession, character: models.Character):
     return crud.create_one(db, character)
 
 
-@app.put("/characters", response_model=models.Character)
+@app.put("/characters", response_model=Optional[models.Character])
 async def update_character(db: DBSession, character: models.Character):
     return crud.update_one(db, character)
 
 
-@app.delete("/characters/{id}", response_model=models.Character)
+@app.delete("/characters/{id}", response_model=Optional[models.Character])
 async def delete_character(db: DBSession, id: int):
     character = crud.get_one(db, models.Character, id)
     return crud.delete_one(db, character)
@@ -67,17 +67,41 @@ async def get_races(db: DBSession, id: int = None):
     return crud.get_all(db, models.Race)
 
 
-@app.post("/races")
+@app.post("/races", response_model=models.Race)
 async def create_race(db: DBSession, race: models.Race):
     return crud.create_one(db, race)
 
 
-@app.put("/races")
+@app.put("/races", response_model=Optional[models.Race])
 async def update_race(db: DBSession, race: models.Race):
     return crud.update_one(db, race)
 
 
-@app.delete("/races/{id}")
+@app.delete("/races/{id}", response_model=Optional[models.Race])
 async def delete_race(db: DBSession, id: int):
     race = crud.get_one(db, models.Race, id)
     return crud.delete_one(db, race)
+
+
+@app.get("/weapons/{id}", response_model=Optional[models.Weapon])
+@app.get("/weapons", response_model=List[models.Weapon])
+async def get_weapons(db: DBSession, id: int = None):
+    if id:
+        return crud.get_one(db, models.Weapon, id)
+    return crud.get_all(db, models.Weapon)
+
+
+@app.post("/weapons", response_model=models.Weapon)
+async def create_weapon(db: DBSession, weapon: models.Weapon):
+    return crud.create_one(db, weapon)
+
+
+@app.put("/weapons", response_model=Optional[models.Weapon])
+async def update_weapon(db: DBSession, weapon: models.Weapon):
+    return crud.update_one(db, weapon)
+
+
+@app.delete("/weapons/{id}", response_model=Optional[models.Weapon])
+async def delete_weapon(db: DBSession, id: int):
+    weapon = crud.get_one(db, models.Weapon, id)
+    return crud.delete_one(db, weapon)

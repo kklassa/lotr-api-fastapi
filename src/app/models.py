@@ -1,6 +1,6 @@
-from typing import List, Optional
-
+from enum import Enum
 from sqlmodel import Field, Relationship, SQLModel 
+from typing import List, Optional
 
 
 class Race(SQLModel, table=True):
@@ -19,3 +19,14 @@ class Character(SQLModel, table=True):
 
     race_id: Optional[int] = Field(default=None, foreign_key="race.id")
     race: Optional[Race] = Relationship(back_populates="characters")
+
+
+class WeaponType(str, Enum):
+    melee = "melee"
+    ranged = "ranged"
+
+
+class Weapon(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    type: WeaponType
